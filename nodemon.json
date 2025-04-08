@@ -1,0 +1,8 @@
+{
+    "watch": ["src", ".env","."],
+    "ext": "ts,env,json",         
+    "exec": "bun run src/app.ts", 
+    "signal": "SIGINT",      
+    "restartable": "rs",      
+    "verbose": false           
+}

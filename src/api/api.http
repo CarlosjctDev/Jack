@@ -1,0 +1,6 @@
+
+### CREAR USUARIO
+GET   http://localhost:3025/api/public/home?name=esteban
+Content-Type: application/json
+
+

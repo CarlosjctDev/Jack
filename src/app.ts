@@ -8,7 +8,7 @@ import '#src/util/shutdown/shutdownHandler.ts';
 
 
 const {
-    PORT,
+    PORT
 } = envConfig();
 
 const app = new Hono();
@@ -28,8 +28,17 @@ app.onError(async (err, c) => {
     logger.fatal(msj);
     return c.text(msj, 500)
 })
+interface ConfigServer {
+    fetch: (request: Request, Env?: unknown, executionCtx?: any) => Response | Promise<Response>;
+    port?: number | string;
+  }
+  
+  const configServer: ConfigServer = {
+    fetch: app.fetch,
+    port: PORT
+  };
 
-export default {
-    port: PORT,
-    fetch: app.fetch,    
-};
+  
+  
+  export default configServer;
+  

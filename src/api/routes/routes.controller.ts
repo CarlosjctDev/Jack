@@ -4,9 +4,6 @@ import { join } from 'node:path';
 import { logger } from '#src/util/logger/logger.ts';
 import { pathToFileURL } from 'node:url';
 
-
-const isProd = process.env.NODE_ENV === 'production';
-
 export const loadRoutesDinamic = async (
     { app, routesDir,baseRoute }: { app: Hono, routesDir: string, baseRoute: string}
     ) =>{
@@ -20,9 +17,8 @@ export const loadRoutesDinamic = async (
             logger.warn(`⛔ Carpeta ignorada (no inicia en MAYÚSCULA): "${nameDirectorio}"`);
               continue;
           }
-          let name = nameDirectorio.toLocaleLowerCase();
-          const extension = isProd ? 'ts' : 'ts';
-          const filename = `${name}.route.${extension}`;            
+          let name = nameDirectorio.toLocaleLowerCase();          
+          const filename = `${name}.route.ts`;            
           const fullPath = join(routesDir, nameDirectorio, filename);          
           const fileURL = pathToFileURL(fullPath).href;
           

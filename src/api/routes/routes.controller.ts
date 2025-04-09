@@ -14,17 +14,17 @@ export const loadRoutesDinamic = async (
         const dir = await opendir(routesDir);
         for await (const dirent of dir) {
           if (!dirent.isDirectory()) continue;          
-          let name = dirent.name;                        
+          const nameDirectorio = dirent.name;                        
           logger.warn(dirent)
-          if (!/^[A-Z]/.test(name)) {
-            logger.warn(`⛔ Carpeta ignorada (no inicia en MAYÚSCULA): "${name}"`);
+          if (!/^[A-Z]/.test(nameDirectorio)) {
+            logger.warn(`⛔ Carpeta ignorada (no inicia en MAYÚSCULA): "${nameDirectorio}"`);
               continue;
           }
-          name = name.toLocaleLowerCase();
+          let name = nameDirectorio.toLocaleLowerCase();
           const extension = isProd ? 'js' : 'ts';
           const filename = `${name}.route.${extension}`;            
-          const fullPath = join(routesDir, name, filename);
-          await readFilesInDir(routesDir);
+          const fullPath = join(routesDir, nameDirectorio, filename);
+          await readFilesInDir(routesDir+"/"+nameDirectorio);
           const fileURL = pathToFileURL(fullPath).href;
           logger.info(`🔍 Buscando archivo: ${fullPath}`);
   

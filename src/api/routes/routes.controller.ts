@@ -3,7 +3,7 @@ import { opendir } from 'node:fs/promises';
 import { join } from 'node:path';
 import { logger } from '#src/util/logger/logger.ts';
 import { pathToFileURL } from 'node:url';
-import { readdir } from 'node:fs/promises';
+
 
 const isProd = process.env.NODE_ENV === 'production';
 
@@ -21,12 +21,11 @@ export const loadRoutesDinamic = async (
               continue;
           }
           let name = nameDirectorio.toLocaleLowerCase();
-          const extension = isProd ? 'js' : 'ts';
+          const extension = isProd ? 'ts' : 'ts';
           const filename = `${name}.route.${extension}`;            
-          const fullPath = join(routesDir, nameDirectorio, filename);
-          await readFilesInDir(routesDir+"/"+nameDirectorio);
+          const fullPath = join(routesDir, nameDirectorio, filename);          
           const fileURL = pathToFileURL(fullPath).href;
-          logger.info(`🔍 Buscando archivo: ${fullPath}`);
+          
   
           try {
             const mod = await import(fileURL);                         
@@ -50,16 +49,3 @@ export const loadRoutesDinamic = async (
         logger.fatal('❌ Error al leer el directorio de rutas:', message);
       }
 }
-const readFilesInDir = async (dirPath: string) => {
-  try {
-    const files = await readdir(dirPath, { withFileTypes: true });
-
-    for (const file of files) {
-      if (file.isFile()) {
-        console.log('📄 Archivo:', file.name);
-      }
-    }
-  } catch (err) {
-    console.error('❌ Error al leer el directorio:', err);
-  }
-};

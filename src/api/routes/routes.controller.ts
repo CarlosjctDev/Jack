@@ -3,6 +3,8 @@ import { opendir } from 'node:fs/promises';
 import { join } from 'node:path';
 import { logger } from '#src/util/logger/logger.ts';
 
+const isProd = process.env.NODE_ENV === 'production';
+
 export const loadRoutesDinamic = async (
     { app, routesDir,baseRoute }: { app: Hono, routesDir: string, baseRoute: string}
     ) =>{
@@ -16,7 +18,8 @@ export const loadRoutesDinamic = async (
                 continue;
             }
             name = name.toLocaleLowerCase();
-            const filename = `${name}.route.ts`;            
+            const extension = isProd ? 'js' : 'ts';
+            const filename = `${name}.route.${extension}`;            
             const fullPath = join(routesDir, name, filename);
     
             try {

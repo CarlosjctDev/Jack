@@ -5,20 +5,30 @@ const IGNORE_PATHS = [
   '/api/privada',
 ];
 
+const isValidIp = (ip: string | undefined) =>
+  !!ip && /^[\d:.]+$/.test(ip);
+
 const limiter = rateLimiter({
     windowMs: 1 * 60 * 1000,
     limit: 15,
     standardHeaders: 'draft-6',
     keyGenerator:(c: Context) => {      
-      const ip = c.req.header('x-forwarded-for')?.split(',')[0].trim() ||
-      c.req.header('x-real-ip') ||
-      c.req.header('cf-connecting-ip') ||
-      'UNKNOWN_IP';
+      const ipRaw = 
+        c.req.header('cf-connecting-ip') ||
+        c.req.header('x-forwarded-for')?.split(',')[0].trim() ||
+        c.req.header('x-real-ip');
+
+      console.log(`x-forwarded-for: ${c.req.header('x-forwarded-for')}`);
+      console.log(`x-real-ip: ${c.req.header('x-real-ip')}`);
+      console.log(`cf-connecting-ip: ${c.req.header('cf-connecting-ip')}`);
+
+      if(!ipRaw) {
+        return 'UNKNOWN_IP';
+      }
+      const ip = isValidIp(ipRaw) ? ipRaw : 'UNKNOWN_IP';
     
-    console.log(`x-forwarded-for: ${c.req.header('x-forwarded-for')}`);
-    console.log(`x-real-ip: ${c.req.header('x-real-ip')}`);
-    console.log(`cf-connecting-ip: ${c.req.header('cf-connecting-ip')}`);
-    console.log(`ip: ${ip}`);
+
+      console.log(`ip: ${ip}`);
       
       //CREAR FUNCIONALIDAD PARA PENALIZAR IPS QUE NO RESPETEN EL TIEMPO DE ESPERA
       return ip;

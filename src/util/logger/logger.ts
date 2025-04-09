@@ -44,6 +44,6 @@ export const logger = pino({
         },
       }
     : undefined,
-}, pino.destination(1));
+});
 
 

@@ -22,8 +22,7 @@ const limiter = rateLimiter({
         return 'UNKNOWN_IP';
       }
       const ip = isValidIp(ipRaw) ? ipRaw : 'UNKNOWN_IP';
-      
-      //CREAR FUNCIONALIDAD PARA PENALIZAR IPS QUE NO RESPETEN EL TIEMPO DE ESPERA
+
       return ip;
     },
     message: {

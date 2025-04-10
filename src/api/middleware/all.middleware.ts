@@ -32,12 +32,7 @@ export const allMiddleware =  (
     }));  
     app.use("*",async (c:Context, next ) =>  await requestAllLimit(c, next));
 
-    app.use("*", async (c: Context, next) => {   
-      const connInfo = getConnInfo(c);
-      
-      
-      console.log(connInfo)
-    
+    app.use("*", async (c: Context, next) => {     
         const start = performance.now();
         c.set('logger', logger);
         c.set('envConfigVar', envConfigVar);

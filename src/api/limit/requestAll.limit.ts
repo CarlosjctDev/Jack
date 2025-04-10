@@ -18,17 +18,10 @@ const limiter = rateLimiter({
         c.req.header('x-forwarded-for')?.split(',')[0].trim() ||
         c.req.header('x-real-ip');
 
-      console.log(`x-forwarded-for: ${c.req.header('x-forwarded-for')}`);
-      console.log(`x-real-ip: ${c.req.header('x-real-ip')}`);
-      console.log(`cf-connecting-ip: ${c.req.header('cf-connecting-ip')}`);
-
       if(!ipRaw) {
         return 'UNKNOWN_IP';
       }
       const ip = isValidIp(ipRaw) ? ipRaw : 'UNKNOWN_IP';
-    
-
-      console.log(`ip: ${ip}`);
       
       //CREAR FUNCIONALIDAD PARA PENALIZAR IPS QUE NO RESPETEN EL TIEMPO DE ESPERA
       return ip;

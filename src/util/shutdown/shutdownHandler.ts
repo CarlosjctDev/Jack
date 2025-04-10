@@ -4,6 +4,7 @@ import { cleanupResources } from '#src/util/shutdown/cleanup.ts';
 
 let isShuttingDown = false; 
 
+
 export const shutdownHandler = async (reason: string, err?: unknown) => {
   if (isShuttingDown) {
     logger.warn("⚠️ El proceso ya está en proceso de apagado.");
@@ -22,8 +23,9 @@ export const shutdownHandler = async (reason: string, err?: unknown) => {
   } catch (cleanupError) {
     logger.error("❌ Error durante la limpieza de recursos: " + cleanupError);
   } finally {
-    logger.info("✅ Proceso terminado.");  
+    logger.info("✅ Proceso terminado.");      
     process.exit(err ? 1 : 0);
+    
   }
 };
 

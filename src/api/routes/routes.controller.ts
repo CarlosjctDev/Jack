@@ -11,8 +11,7 @@ export const loadRoutesDinamic = async (
         const dir = await opendir(routesDir);
         for await (const dirent of dir) {
           if (!dirent.isDirectory()) continue;          
-          const nameDirectorio = dirent.name;                        
-          logger.warn(dirent)
+          const nameDirectorio = dirent.name;                                  
           if (!/^[A-Z]/.test(nameDirectorio)) {
             logger.warn(`⛔ Carpeta ignorada (no inicia en MAYÚSCULA): "${nameDirectorio}"`);
               continue;
@@ -33,7 +32,6 @@ export const loadRoutesDinamic = async (
             }
 
             app.route(endPoint, router);
-            // logger.info(`🌳 Ruta cargada: ${name} EndPoint: ${endPoint}`);
           } catch (err: unknown) {
               const message = err instanceof Error ? err.message : String(err);
               logger.warn(`⚠️ No se pudo cargar la ruta para "${name}": ${message}`);

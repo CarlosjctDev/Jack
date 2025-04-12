@@ -9,7 +9,7 @@ import { envConfig } from '#src/util/envConfig.controller.ts';
 import { requestAllLimit } from '#src/api/limit/requestAll.limit.ts';
 
 
-const envConfigVar = envConfig();
+const envConfigVar = await envConfig();
 
 export const allMiddleware =  (
     { app } : {app:Hono}

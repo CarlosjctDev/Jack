@@ -4,7 +4,7 @@ import { loadRoutesDinamic } from '#src/api/routes/routes.controller.ts';
 
 const {    
     API_BASE_PATH
-} = envConfig();
+} = await envConfig();
 
 const baseRoute = `${API_BASE_PATH}/public`;
 

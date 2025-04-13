@@ -11,10 +11,3 @@ router.get('/', (c:Context) => {
     console.log('errorLanguageSelect', errorLanguageSelect);
     return c.text("HOLA MUNDO")
 });
-
-
-
-
-
-
- 

@@ -1,1 +1,7 @@
-{}
+{
+    "VALIDATE_PARAMS_FAILED": "The provided parameters do not meet the required validations.",
+    "AUTH_LOGIN_FAILED": "Failed to log in the user, please try again later.",
+    "ACCESS_TOKEN_INVALID": "The access token is invalid.",
+    "ACCESS_TOKEN_EXPIRED": "The access token has expired.",
+    "INTERNAL_SERVER_ERROR": "An internal server error occurred. Please try again later."
+}

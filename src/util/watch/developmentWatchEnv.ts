@@ -1,29 +1,22 @@
 import { watch } from 'fs';
 import { writeFileSync, readFileSync } from "fs";
 
-let ejecutado = {
-    env: false
-}
+let booleanEnv = false;
 
-const target = "src/app.ts";
-
-export const initWatchEnv = (envConfigVar:any) => { 
-    let {WATCH_ENV_CONFIG = false} = envConfigVar;
-    if (WATCH_ENV_CONFIG) return;
-    process.env.WATCH_ENV_CONFIG = 'true';  
-    watch('.env', (eventType) => {
+export const initWatchEnv = (targetPath:string) => {     
+    watch('.env', (eventType) => {        
         if (eventType === 'change') {
-          if (ejecutado.env) return;
-          ejecutado.env = true;          
-          const original = readFileSync(target, "utf-8");
+          if (booleanEnv) return; 
+          booleanEnv = true;         
+          const original = readFileSync(targetPath, "utf-8");
           
       const modified = original + ``;
-      writeFileSync(target, modified);      
+      writeFileSync(targetPath, modified);      
           setTimeout(() => {        
-              ejecutado.env = false;
+            booleanEnv = false;
           }, 1000);     
         }
-      });
+      });            
 }
 
 

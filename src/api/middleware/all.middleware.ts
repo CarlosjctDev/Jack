@@ -57,13 +57,14 @@ export const allMiddleware =  (
         await next();
         const duration = performance.now() - start;
         c.res.headers.set('X-Response-Time', `${duration.toFixed(2)}ms`);
-        logger.info({            
+        const jsonResponse = {            
           method: c.req.method,
           url: c.req.url,
           status: c.res.status,
           responseTime: `${duration.toFixed(2)}ms`,
           ...getConnInfo(c).remote
-        },"http request");	        
+        };
+        logger.info(jsonResponse,`http request ${JSON.stringify(jsonResponse)}`);	        
       });
 };
 

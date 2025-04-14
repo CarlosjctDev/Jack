@@ -5,10 +5,9 @@ import { logger } from '#src/util/logger/logger.ts';
 import { pathToFileURL } from 'node:url';
 
 
-const isLowerCase = (name: string): boolean => /^[a-z.[\]]+$/.test(name);
+const isLowerCase = (name: string): boolean => /^[a-z.]+$/.test(name);
 const startsWithUpperCase = (name: string): boolean => /^[A-Z]/.test(name);
-const regexFilesRaiz = /^raiz\.route\[(\w*)\]$/;
-
+const regexFilesRaiz = /^raiz(?:\.(\w+))?\.route$/;
 
 const processFilesInDirectory = async (
   app: Hono,
@@ -26,16 +25,15 @@ const processFilesInDirectory = async (
     if (!isLowerCase(name)) {      
       const messageEspacios = name.split(' ').length > 1 ? '⚠️ NOTA: EL NOMBRE DEL ARCHIVO NO PUEDE CONTENER ESPACIOS' : '';
       logger.warn(`⛔ El archivo "${name}" ha sido ignorado porque no cumple con las convenciones de nomenclatura 
-        (solo se permiten letras minúsculas y corchetes '[]').
+        (solo se permiten letras minúsculas y puntos).
          ${messageEspacios} Asegúrate de que el nombre del archivo siga el formato adecuado en el directorio "${routesDir}".`);
-
       continue;
     }
     
-    const match = name.match(regexFilesRaiz);    
+    const match = name.match(regexFilesRaiz); 
     if (!match) {
       logger.warn(`⚠️ El archivo "${name}.${extension}" no sigue la estructura correcta de nombres.
-         Debe tener el formato 'raiz.route[AQUI VA EL NOMBRE DE LA RUTA]'
+         Debe tener el formato 'raiz.AQUIVALARUTA.route.ts' o 'raiz.route.ts'.
          (puede estar vacío, pero no debe contener espacios).
          Archivo ignorado en el directorio "${routesDir}".`);
 

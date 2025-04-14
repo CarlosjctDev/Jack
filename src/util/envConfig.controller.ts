@@ -6,10 +6,12 @@ let rawEnv: Record<string, string | undefined> | null = null;
 
 
 export const envConfig = async () => {  
-  if (!rawEnv && process.env.NODE_ENV !== 'production') {
+  
+  if (!rawEnv && process.env.NODE_ENV !== 'production') {    
     const { promises: fs } = await import('fs');
     const path = await import('path');
     const envFilePath = path.resolve(process.cwd(), '.env');
+    
 
     try {
       if (await fs.access(envFilePath).then(() => true).catch(() => false)) {

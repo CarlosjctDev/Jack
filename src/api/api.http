@@ -1,6 +1,6 @@
 
 ### CREAR USUARIO
-GET   http://localhost:3025/api/public/home
+GET   http://localhost:8080/api/public/home
 Content-Type: application/json
 
 
